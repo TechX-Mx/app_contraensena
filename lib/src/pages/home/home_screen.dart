@@ -1,4 +1,5 @@
 import 'package:contraensena/src/pages/home/home_controller.dart';
+import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -219,7 +220,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration:
                       BoxDecoration(color: Color.fromRGBO(44, 56, 220, 0.76)),
                   child: ListView(
-                    children: [
+                    children: listApps(),
+                    /*children: [
                       Container(
                         margin: EdgeInsets.symmetric(vertical: 10.0),
                         height: 60.0,
@@ -356,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                    ],
+                    ],*/
                   ),
                 ))
               ],
@@ -633,5 +635,81 @@ class _HomeScreenState extends State<HomeScreen> {
         ),*/
       ),
     );
+  }
+
+  List<Widget> listApps() {
+    List<Widget> opt = [];
+    for (var i = 0; i < con.apps.length; i++) {
+      Application app = con.apps[i];
+      Widget temp = Container(
+        margin: EdgeInsets.symmetric(vertical: 10.0),
+        height: 60.0,
+        alignment: Alignment.topCenter,
+        decoration: BoxDecoration(
+            color: Color.fromRGBO(255, 255, 255, 0.49),
+            borderRadius: BorderRadius.circular(20)),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+                child: Container(
+              alignment: Alignment.center,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Image.asset(
+                    'assets/whatsapp.png',
+                    height: 40.0,
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Text(
+                    '${con.apps[i].appName}',
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'Georgia',
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  )
+                ],
+              ),
+            )),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.37,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 54.0,
+                    width: 56.0,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.0)),
+                  ),
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Container(
+                    height: 54.0,
+                    width: 56.0,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: Image.asset('assets/check.png'),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+      opt.add(temp);
+    }
+    return opt;
   }
 }

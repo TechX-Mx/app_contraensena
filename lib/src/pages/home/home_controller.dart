@@ -13,7 +13,8 @@ class HomeController {
   }
 
   Future listApps() async {
-    await DeviceApps.getInstalledApplications().then((value) => print(value));
-    //print(apps);
+    apps = await DeviceApps.getInstalledApplications(
+        includeAppIcons: true, includeSystemApps: false);
+    print(apps[0]);
   }
 }
