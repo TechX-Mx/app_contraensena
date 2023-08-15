@@ -1,4 +1,5 @@
 import 'package:contraensena/src/pages/home/home_screen.dart';
+import 'package:contraensena/src/pages/lock/lock_screen.dart';
 import 'package:contraensena/src/pages/login/login_screen.dart';
 import 'package:contraensena/src/pages/register/register_screen.dart';
 import 'package:contraensena/src/pages/welcome/welcome_screen.dart';
@@ -32,10 +33,11 @@ class MyApp extends StatelessWidget {
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       initialRoute: '/welcome',
       routes: {
-        '/welcome': (context) => WelcomeScreen(),
-        '/login': (context) => LoginScreen(),
-        '/register': (context) => RegisterScreen(),
-        '/home': (context) => HomeScreen()
+        '/welcome': (context) => const WelcomeScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/home': (context) => const HomeScreen(),
+        '/lock_admin': (context) => const LockScreen()
       },
     );
   }

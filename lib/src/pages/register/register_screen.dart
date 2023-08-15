@@ -1,4 +1,7 @@
+import 'package:contraensena/src/pages/register/register_controller.dart';
+import 'package:contraensena/src/utils/colorsApp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -8,52 +11,37 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  RegisterController con = RegisterController();
+  Size? size;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+      await con.init(context);
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
       extendBody: true,
-      body: Container(
+      body: SizedBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Expanded(
-              //height: MediaQuery.of(context).size.height * 0.35,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'CONTRA',
-                    style: TextStyle(
-                        fontSize: 50.0,
-                        color: Color.fromRGBO(254, 128, 34, 1),
-                        fontWeight: FontWeight.bold,
-                        height: 0.0,
-                        wordSpacing: 0.0,
-                        fontFamily: 'CooperBlack'),
-                  ),
-                  Text(
-                    'ENSEÑA',
-                    style: TextStyle(
-                        fontSize: 55.0,
-                        color: Color.fromRGBO(235, 35, 36, 1),
-                        fontWeight: FontWeight.bold,
-                        height: 0.0,
-                        wordSpacing: 0.0,
-                        fontFamily: 'CooperBlack'),
-                  )
-                ],
-              ),
-            ),
+            title(),
             Container(
-              height: MediaQuery.of(context).size.height * 0.65,
-              width: MediaQuery.of(context).size.width * 1.0,
-              decoration: BoxDecoration(
+              height: size!.height * 0.65,
+              width: size!.width * 1.0,
+              decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                      'assets/fondo.png'), // Replace 'assets/background_image.jpg' with your image path
-                  fit: BoxFit
-                      .fill, // Adjust the image size to cover the container
+                  image: AssetImage('assets/fondo.png'),
+                  fit: BoxFit.fill,
                 ),
               ),
               child: Column(
@@ -61,79 +49,83 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width *
-                          0.1, /*vertical: MediaQuery.of(context).size.width * 0.2*/
+                      horizontal: size!.width * 0.1,
                     ),
                     child: Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 15.0),
+                          padding: const EdgeInsets.symmetric(vertical: 15.0),
                           child: TextField(
-                            style: TextStyle(fontFamily: 'Georgia'),
+                            controller: con.names,
+                            style: TextStyle(
+                                fontFamily: 'Georgia', color: ColorsApp.white),
                             decoration: InputDecoration(
-                              fillColor: Color.fromRGBO(44, 56, 220, 0.6),
+                              fillColor: ColorsApp.fondoInput,
                               filled: true,
                               hintText: '     Nombres y Apellidos',
-                              hintStyle: TextStyle(color: Colors.white),
+                              hintStyle: TextStyle(color: ColorsApp.white),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    width: 1,
-                                    color: Colors.white), //<-- SEE HERE
+                                    width: 1, color: ColorsApp.white),
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     width: 1,
-                                    color: Colors.white), //<-- SEE HERE
+                                    color: ColorsApp.white), //<-- SEE HERE
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 15.0),
+                          padding: const EdgeInsets.symmetric(vertical: 15.0),
                           child: TextField(
-                            style: TextStyle(fontFamily: 'Georgia'),
+                            controller: con.username,
+                            style: TextStyle(
+                                fontFamily: 'Georgia', color: ColorsApp.white),
                             decoration: InputDecoration(
-                              fillColor: Color.fromRGBO(44, 56, 220, 0.6),
+                              fillColor: ColorsApp.fondoInput,
                               filled: true,
                               hintText: '     Email',
-                              hintStyle: TextStyle(color: Colors.white),
+                              hintStyle: TextStyle(color: ColorsApp.white),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     width: 1,
-                                    color: Colors.white), //<-- SEE HERE
+                                    color: ColorsApp.white), //<-- SEE HERE
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     width: 1,
-                                    color: Colors.white), //<-- SEE HERE
+                                    color: ColorsApp.white), //<-- SEE HERE
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 15.0),
+                          padding: const EdgeInsets.symmetric(vertical: 15.0),
                           child: TextField(
+                            controller: con.password,
                             obscureText: true,
-                            style: TextStyle(fontFamily: 'Georgia'),
+                            style: TextStyle(
+                                fontFamily: 'Georgia', color: ColorsApp.white),
                             decoration: InputDecoration(
-                              fillColor: Color.fromRGBO(44, 56, 220, 0.6),
+                              fillColor: ColorsApp.fondoInput,
                               filled: true,
                               hintText: '     Contraseña',
-                              hintStyle: TextStyle(color: Colors.white),
+                              hintStyle: TextStyle(color: ColorsApp.white),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     width: 1,
-                                    color: Colors.white), //<-- SEE HERE
+                                    color: ColorsApp.white), //<-- SEE HERE
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     width: 1,
-                                    color: Colors.white), //<-- SEE HERE
+                                    color: ColorsApp.white), //<-- SEE HERE
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
                             ),
@@ -147,9 +139,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               style: TextStyle(
                                   fontFamily: 'Georgia',
                                   fontSize: 15.0,
-                                  color: Colors.white),
+                                  color: ColorsApp.white),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15.0,
                             ),
                             GestureDetector(
@@ -159,7 +151,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 style: TextStyle(
                                   fontFamily: 'Georgia',
                                   fontSize: 15.0,
-                                  color: Colors.white,
+                                  color: ColorsApp.white,
                                   decoration: TextDecoration.underline,
                                 ),
                               ),
@@ -176,19 +168,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: MaterialButton(
                             height: 50.0,
                             minWidth: MediaQuery.of(context).size.width * 0.40,
-                            color: Color.fromRGBO(44, 56, 220, 0.66),
+                            color: ColorsApp.fondoInput,
                             onPressed: () =>
                                 Navigator.pushNamed(context, '/home'),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                                 side: BorderSide(
-                                    color: Colors.white, width: 1.0)),
+                                    color: ColorsApp.white, width: 1.0)),
                             child: Text(
                               'Registrarme',
                               style: TextStyle(
                                   fontFamily: 'Georgia',
                                   fontSize: 20.0,
-                                  color: Color.fromRGBO(255, 255, 255, 0.76)),
+                                  color: ColorsApp.textLogin),
                             ),
                           ),
                         ),
@@ -204,7 +196,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: MaterialButton(
                       //minWidth: MediaQuery.of(context).size.width * 0.5,
                       height: 50.0,
-                      color: Color.fromRGBO(69, 132, 245, 1),
+                      color: ColorsApp.fondoBtnGoogle,
                       onPressed: () => Navigator.pushNamed(context, '/home'),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -219,7 +211,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Text(
                             'Sing up with google',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: ColorsApp.white,
                                 fontSize: 16.0,
                                 fontFamily: 'Georgia'),
                           )
@@ -228,7 +220,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.04,
+                    height: size!.height * 0.04,
                   )
                 ],
               ),
@@ -237,5 +229,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     ));
+  }
+
+  Widget title() {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'CONTRA',
+            style: TextStyle(
+                fontSize: 40.0,
+                color: ColorsApp.orange,
+                fontWeight: FontWeight.bold,
+                height: 0.0,
+                wordSpacing: 0.0,
+                fontFamily: 'CooperBlack'),
+          ),
+          Text(
+            'ENSEÑA',
+            style: TextStyle(
+                fontSize: 45.0,
+                color: ColorsApp.red,
+                fontWeight: FontWeight.bold,
+                height: 0.0,
+                wordSpacing: 0.0,
+                fontFamily: 'CooperBlack'),
+          )
+        ],
+      ),
+    );
   }
 }

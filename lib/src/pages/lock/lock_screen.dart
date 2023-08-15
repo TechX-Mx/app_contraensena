@@ -1,4 +1,6 @@
+import 'package:contraensena/src/utils/colorsApp.dart';
 import 'package:flutter/material.dart';
+import 'package:pattern_lock/pattern_lock.dart';
 
 class LockScreen extends StatefulWidget {
   const LockScreen({super.key});
@@ -8,136 +10,14 @@ class LockScreen extends StatefulWidget {
 }
 
 class _LockScreenState extends State<LockScreen> {
+  Offset? offset;
+  List<int> codes = [];
   @override
   Widget build(BuildContext context) {
+    var _width = MediaQuery.of(context).size.width;
+    var _sizePainter = Size.square(_width);
     return SafeArea(
       child: Scaffold(
-        /*appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: Color.fromRGBO(70, 76, 163, 1), width: 2.0),
-                borderRadius: BorderRadius.circular(12.0)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'NUEVAS',
-                  style: TextStyle(
-                      color: Color.fromRGBO(70, 76, 163, 1), fontSize: 17.0),
-                ),
-                Text(
-                  'ACTIVIDADES',
-                  style: TextStyle(
-                      color: Color.fromRGBO(70, 76, 163, 1), fontSize: 17.0),
-                )
-              ],
-            ),
-          ),
-          iconTheme: IconThemeData(color: Color.fromRGBO(67, 78, 246, 1)),
-          actions: [
-            Container(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Contra',
-                    style: TextStyle(
-                        fontSize: 25.0,
-                        color: Color.fromRGBO(254, 128, 34, 1),
-                        fontWeight: FontWeight.bold,
-                        height: 0.0,
-                        wordSpacing: 0.0),
-                  ),
-                  Text(
-                    'Enseña',
-                    style: TextStyle(
-                        fontSize: 28.0,
-                        color: Color.fromRGBO(235, 35, 36, 1),
-                        fontWeight: FontWeight.bold,
-                        height: 0.0,
-                        wordSpacing: 0.0),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 15.0,
-            )
-          ],
-        ),
-        drawer: Drawer(
-          backgroundColor: Color.fromRGBO(67, 78, 246, 1),
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Contra',
-                          style: TextStyle(
-                              fontSize: 55.0,
-                              color: Color.fromRGBO(254, 128, 34, 1),
-                              fontWeight: FontWeight.bold,
-                              height: 0.0,
-                              wordSpacing: 0.0),
-                        ),
-                        Text(
-                          'Enseña',
-                          style: TextStyle(
-                              fontSize: 65.0,
-                              color: Color.fromRGBO(235, 35, 36, 1),
-                              fontWeight: FontWeight.bold,
-                              height: 0.0,
-                              wordSpacing: 0.0),
-                        )
-                      ],
-                    ),
-                  )),
-              ListTile(
-                leading: Icon(
-                  Icons.lock,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                title: Text(
-                  'Contraseña',
-                  style: TextStyle(color: Colors.white, fontSize: 25.0),
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.settings,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                title: Text('Configuración',
-                    style: TextStyle(color: Colors.white, fontSize: 25.0)),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.output,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                title: Text('Salir',
-                    style: TextStyle(color: Colors.white, fontSize: 25.0)),
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
-        */
         backgroundColor: Colors.white,
         body: Stack(alignment: Alignment.topCenter, children: [
           Container(
@@ -194,14 +74,73 @@ class _LockScreenState extends State<LockScreen> {
                 Container(
                   height: 20.0,
                   decoration:
-                      BoxDecoration(color: Color.fromRGBO(44, 56, 220, 0.76)),
+                      BoxDecoration(color: Color.fromRGBO(467, 78, 246, 1)),
                 ),
                 Expanded(
                     child: Container(
                   decoration:
-                      BoxDecoration(color: Color.fromRGBO(44, 56, 220, 0.76)),
-                  child: ListView(
-                    children: [],
+                      BoxDecoration(color: Color.fromRGBO(67, 78, 246, 1)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          child: Container(
+                        width: MediaQuery.of(context).size.width * 1,
+                        padding: EdgeInsets.symmetric(horizontal: 30.0),
+                        child: PatternLock(
+                          // color of selected points.
+                          selectedColor: Colors.red,
+                          notSelectedColor: ColorsApp.white,
+                          // radius of points.
+                          pointRadius: 30,
+                          // whether show user's input and highlight selected points.
+                          showInput: true,
+                          // count of points horizontally and vertically.
+                          dimension: 3,
+                          // padding of points area relative to distance between points.
+                          relativePadding: 0.7,
+                          // needed distance from input to point to select point.
+                          selectThreshold: 25,
+                          // whether fill points.
+                          fillPoints: true,
+
+                          // callback that called when user's input complete. Called if user selected one or more points.
+                          onInputComplete: (List<int> input) {
+                            print("pattern is $input");
+                          },
+                        ),
+                      )),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        child: GestureDetector(
+                            child: Text(
+                          'Olvide mi contraseña',
+                          style: TextStyle(
+                              fontFamily: 'Georgia',
+                              color: ColorsApp.white,
+                              fontSize: 18.0),
+                        )),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 20.0),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                                color: ColorsApp.orange, width: 6.0)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 10.0),
+                        child: Container(
+                          child: Text(
+                            'NUEVAS\nACTIVIDADES',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: 'CooperBlack',
+                                color: Color.fromRGBO(231, 28, 38, 1)),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ))
               ],
@@ -221,7 +160,7 @@ class _LockScreenState extends State<LockScreen> {
                     child: Container(
                   alignment: Alignment.center,
                   child: Text(
-                    'ACTIVAR',
+                    'CONTRASEÑA',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontFamily: 'Georgia',
@@ -230,31 +169,6 @@ class _LockScreenState extends State<LockScreen> {
                         fontWeight: FontWeight.w700),
                   ),
                 )),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.40,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 54.0,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20.0)),
-                        child: Image.asset('assets/llave_new.png'),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Container(
-                        height: 54.0,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20.0)),
-                        child: Image.asset('assets/edit_new.png'),
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           )
