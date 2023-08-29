@@ -81,7 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
                           child: TextField(
-                            controller: con.username,
+                            controller: con.email,
                             style: TextStyle(
                                 fontFamily: 'Georgia', color: ColorsApp.white),
                             decoration: InputDecoration(
@@ -169,8 +169,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 50.0,
                             minWidth: MediaQuery.of(context).size.width * 0.40,
                             color: ColorsApp.fondoInput,
-                            onPressed: () =>
-                                Navigator.pushNamed(context, '/home'),
+                            onPressed: () async => con.register(),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                                 side: BorderSide(
